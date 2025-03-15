@@ -664,7 +664,7 @@ void wifi_init(const char *ssid, const char *passwd, const char *static_ip, cons
         ESP_LOGI(TAG, "wifi_init_ap with default finished.");
     }
     setTxPower();
-    start_dns_server();
+    // start_dns_server();
 }
 
 char *param_set_default(const char *def_val)
