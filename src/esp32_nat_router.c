@@ -42,6 +42,7 @@
 #include "lwip/lwip_napt.h"
 
 #include "router_globals.h"
+#include "espnow_receiver.h"
 
 // On board LED
 #define BLINK_GPIO 2
@@ -843,6 +844,9 @@ void app_main(void)
 
     // Setup WIFI
     wifi_init(ssid, passwd, static_ip, subnet_mask, gateway_addr, ap_ssid, ap_passwd, ap_ip, sta_user, sta_identity);
+    
+    // Initialize ESP-NOW receiver for temperature/humidity data
+    espnow_receiver_init();
 
     pthread_t t1;
     int32_t led_disabled = 0;

@@ -7,6 +7,13 @@ const char *JSON_TEMPLATE = "{\"clients\": %d,\"strength\": %s,\"text\": \"%s\"}
 
 esp_err_t rest_handler(httpd_req_t *req)
 {
+    // Only handle exact /api path, not /api/temperature
+    if (strcmp(req->uri, "/api") != 0)
+    {
+        // Not our handler, return 404
+        return httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, NULL);
+    }
+    
     if (isLocked())
     {
         return httpd_resp_send_err(req, HTTPD_401_UNAUTHORIZED, NULL);

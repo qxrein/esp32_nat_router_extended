@@ -654,6 +654,19 @@ static int show(int argc, char **argv)
     }
     printf("%d Stations connected\n", getConnectCount());
 
+    // Display MAC addresses
+    uint8_t mac[6];
+    if (esp_wifi_get_mac(WIFI_IF_STA, mac) == ESP_OK)
+    {
+        printf("STA MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\n", 
+               mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    }
+    if (esp_wifi_get_mac(WIFI_IF_AP, mac) == ESP_OK)
+    {
+        printf("AP MAC Address:  %02X:%02X:%02X:%02X:%02X:%02X\n", 
+               mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    }
+
     print_portmap_tab();
 
     return 0;

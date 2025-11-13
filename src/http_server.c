@@ -122,6 +122,24 @@ static httpd_uri_t portmap_page_download = {
     .handler = portmap_post_handler,
     .user_ctx = NULL};
 
+static httpd_uri_t temperature_page_download = {
+    .uri = "/temperature",
+    .method = HTTP_GET,
+    .handler = temperature_get_handler,
+    .user_ctx = NULL};
+
+static httpd_uri_t temperature_api = {
+    .uri = "/api/temperature",
+    .method = HTTP_GET,
+    .handler = temperature_api_get_handler,
+    .user_ctx = NULL};
+
+static httpd_uri_t temperature_api_post = {
+    .uri = "/api/temperature",
+    .method = HTTP_POST,
+    .handler = temperature_api_post_handler,
+    .user_ctx = NULL};
+
 // URI handler for getting favicon
 static httpd_uri_t favicon_handler = {
     .uri = "/favicon.ico",
@@ -151,7 +169,7 @@ httpd_handle_t start_webserver(void)
 {
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    config.max_uri_handlers = 25;
+    config.max_uri_handlers = 30;
     config.stack_size = 16384;
     config.lru_purge_enable = true;
 
@@ -198,6 +216,9 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &jquery_handler);
         httpd_register_uri_handler(server, &about_handler);
         httpd_register_uri_handler(server, &styles_handler);
+        // Register specific API handlers before general /api handler
+        httpd_register_uri_handler(server, &temperature_api);
+        httpd_register_uri_handler(server, &temperature_api_post);
         httpd_register_uri_handler(server, &apig);
         httpd_register_uri_handler(server, &advanced_page_download);
         httpd_register_uri_handler(server, &clients_page_download);
@@ -207,6 +228,7 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &otalog_post_download);
         httpd_register_uri_handler(server, &portmap_page_download);
         httpd_register_uri_handler(server, &portmap_post_download);
+        httpd_register_uri_handler(server, &temperature_page_download);
         httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, http_404_error_handler);
         return server;
     }
