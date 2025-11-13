@@ -1,5 +1,8 @@
 # ESP32 NAT Router Extended
 
+[!NOTE] this is the fork for this NAT router this has the wifi direct connection to send temprature (hardware) readings to esp32 on the NAT wifi itself.
+
+
 This is a firmware to use the ESP32 as WiFi NAT router. It can be used as
 - Simple range extender for an existing WiFi network
 - Setting up an additional WiFi network with different SSID/password for guests or IOT devices
